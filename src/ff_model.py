@@ -16,9 +16,13 @@ class FF_model(torch.nn.Module):
         self.num_channels = [self.opt.model.hidden_dim] * self.opt.model.num_layers
         self.act_fn = ReLU_full_grad()
 
+        # FORWARD-FORWARD MODEL
         # Initialize the model.
+
         # Add the input layer.
+        # 784 is the number of pixels in MNIST.
         self.model = nn.ModuleList([nn.Linear(784, self.num_channels[0])])
+
         # Add the hidden layers.
         for i in range(1, len(self.num_channels)):
             self.model.append(nn.Linear(self.num_channels[i - 1], self.num_channels[i]))
@@ -32,13 +36,17 @@ class FF_model(torch.nn.Module):
             for i in range(self.opt.model.num_layers)
         ]
 
-        # Initialize downstream classification loss.
+        # DOWNSTREAM CLASSIFICATION MODEL
+        # Initialize the linear classifier.
+        # We use the output of all hidden layers as the input to the classifier.
         channels_for_classification_loss = sum(
             self.num_channels[-i] for i in range(self.opt.model.num_layers - 1)
         )
         self.linear_classifier = nn.Sequential(
             nn.Linear(channels_for_classification_loss, 10, bias=False)
         )
+
+        # Initialize downstream classification loss.
         self.classification_loss = nn.CrossEntropyLoss()
 
         # Initialize weights.
