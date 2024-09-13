@@ -8,7 +8,7 @@ input:
 
 model:
   peer_normalization: 0.03
-  momentum: 0.9  # Momentum to use for the running mean in peer normalization loss. It controls how much of the previous mean should be retained. A high momentum value gives more weight to the previous mean, while a lower value gives more weight to the current batch's mean activity.
+  momentum: 0.0  # Momentum to use for the running mean in peer normalization loss. It controls how much of the previous mean should be retained. A high momentum value gives more weight to the previous mean, while a lower value gives more weight to the current batch's mean activity. In the LoeweX implementation, the momentum is set to 0.9.
 
   hidden_dim: 1000
   num_layers: 3
