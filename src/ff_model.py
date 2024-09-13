@@ -17,7 +17,9 @@ class FF_model(torch.nn.Module):
         self.act_fn = ReLU_full_grad()
 
         # Initialize the model.
+        # Add the input layer.
         self.model = nn.ModuleList([nn.Linear(784, self.num_channels[0])])
+        # Add the hidden layers.
         for i in range(1, len(self.num_channels)):
             self.model.append(nn.Linear(self.num_channels[i - 1], self.num_channels[i]))
 
