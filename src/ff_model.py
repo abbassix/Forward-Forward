@@ -120,9 +120,7 @@ class FF_model(torch.nn.Module):
 
         return scalar_outputs
 
-    def forward_downstream_classification_model(
-        self, inputs, labels, scalar_outputs=None,
-    ):
+    def forward_downstream_classification_model(self, inputs, labels, scalar_outputs=None):
         if scalar_outputs is None:
             scalar_outputs = {
                 "Loss": torch.zeros(1, device=self.opt.device),
